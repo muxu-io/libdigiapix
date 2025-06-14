@@ -52,7 +52,10 @@ extern "C" {
  * @args:	Additional arguments.
  */
 #define log_error(format, ...)					\
-	syslog(LOG_ERR, "[ERROR] " format, __VA_ARGS__)
+	do {								\
+		syslog(LOG_ERR, "[ERROR] " format, __VA_ARGS__);	\
+		printf("[ERROR] " format "\n", __VA_ARGS__);		\
+	} while (0)
 
 /**
  * log_warning() - Log the given message as warning
@@ -61,16 +64,21 @@ extern "C" {
  * @args:	   Additional arguments.
  */
 #define log_warning(format, ...)					\
-	syslog(LOG_WARNING, "[WARNING] " format, __VA_ARGS__)
-
+	do {								\
+		syslog(LOG_WARNING, "[WARNING] " format, __VA_ARGS__);	\
+		printf("[WARNING] " format "\n", __VA_ARGS__);		\
+	} while (0)
 /**
  * log_notice() - Log the given message as notice
  *
  * @format:	  Notice message to log.
  * @args:	  Additional arguments.
  */
-#define log_notice(format, ...)					\
-	syslog(LOG_NOTICE, "[NOTICE] " format, __VA_ARGS__)
+#define log_notice(format, ...)						\
+	do {								\
+		syslog(LOG_NOTICE, "[NOTICE] " format, __VA_ARGS__);	\
+		printf("[NOTICE] " format "\n", __VA_ARGS__);		\
+	} while (0)
 
 /**
  * log_info() - Log the given message as info
@@ -78,8 +86,11 @@ extern "C" {
  * @format:	Info message to log.
  * @args:	Additional arguments.
  */
-#define log_info(format, ...)					\
-	syslog(LOG_INFO, "[INFO] " format, __VA_ARGS__)
+#define log_info(format, ...)						\
+	do {								\
+		syslog(LOG_INFO, "[INFO] " format, __VA_ARGS__);	\
+		printf("[INFO] " format "\n", __VA_ARGS__);		\
+	} while (0)
 
 /**
  * log_debug() - Log the given message as debug
@@ -87,8 +98,12 @@ extern "C" {
  * @format:	Debug message to log.
  * @args:	Additional arguments.
  */
-#define log_debug(format, ...)					\
-	syslog(LOG_DEBUG, "[DEBUG] " format, __VA_ARGS__)
+#define log_debug(format, ...)						\
+	do {								\
+		syslog(LOG_DEBUG, "[DEBUG] " format, __VA_ARGS__);	\
+		printf("[DEBUG] " format "\n", __VA_ARGS__);		\
+	} while (0)
+
 
 #ifdef __cplusplus
 }

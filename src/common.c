@@ -139,7 +139,7 @@ int check_request_mode(request_mode_t request_mode)
  */
 static void digiapix_init(void)
 {
-	init_logger(LOG_ERR, LOG_CONS | LOG_NDELAY | LOG_PID | LOG_PERROR);
+	init_logger(LOG_DEBUG, LOG_CONS | LOG_NDELAY | LOG_PID | LOG_PERROR);
 
 	config_load();
 }

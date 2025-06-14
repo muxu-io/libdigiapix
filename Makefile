@@ -73,6 +73,7 @@ PYMODULES = common \
 	    network
 
 ifeq ($(CONFIG_DISABLE_BT),)
+$(info CONFIG_DISABLE_BT is: $(CONFIG_DISABLE_BT))
 SRCS += $(SRC_DIR)/bluetooth.c
 PUBLIC_HEADERS += $(HEADERS_PUBLIC_DIR)/bluetooth.h
 CFLAGS += $(shell pkg-config --cflags bluez)

@@ -632,8 +632,12 @@ int ldx_gpio_set_value(gpio_t *gpio, gpio_value_t value)
 	struct _gpio_t *_data = NULL;
 	int ret = EXIT_FAILURE;
 
-	if (check_gpio(gpio) != EXIT_SUCCESS)
+	log_debug("%s: ENTER gpio %p value %d", __func__, gpio, value);
+
+	if (check_gpio(gpio) != EXIT_SUCCESS){
+		log_error("%s: Failed on check_gpio",__func__);
 		return EXIT_FAILURE;
+	}
 
 	switch (value) {
 	case GPIO_LOW:
@@ -669,24 +673,33 @@ gpio_value_t ldx_gpio_get_value(gpio_t *gpio)
 	struct _gpio_t *_data = NULL;
 	int level;
 
-	if (check_gpio(gpio) != EXIT_SUCCESS)
+	log_debug("%s: ENTER gpio=%p", __func__, gpio);
+
+	if (check_gpio(gpio) != EXIT_SUCCESS){
+		log_debug("%s: Returning %d", __func__, GPIO_VALUE_ERROR);
 		return GPIO_VALUE_ERROR;
+	}
 
 	log_debug("%s: Getting value of GPIO %s", __func__,
 		  show_gpio(gpio));
 
 	_data = gpio->_data;
 
-	if (gpio->kernel_number == UNDEFINED_SYSFS_GPIO)
+	if (gpio->kernel_number == UNDEFINED_SYSFS_GPIO) {
 		level = gpiod_line_get_value(_data->_line);
-	else
+		log_debug("%s: level=%d", __func__, level);
+	}
+	else {
 		level = libsoc_gpio_get_level(_data->_internal_gpio);
+		log_debug("%s: level=%d", __func__, level);
+	}
 
 	if (level == LEVEL_ERROR) {
 		log_error("%s: Unable to get GPIO %s value", __func__,
 			  show_gpio(gpio));
 		return GPIO_VALUE_ERROR;
 	}
+	log_debug("%s: EXIT %d", __func__, level);
 	return level;
 }
 
